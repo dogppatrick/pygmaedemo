@@ -147,3 +147,4 @@ log.*
 *.json
 
 dist/
+pyxel_examples/
