@@ -3,12 +3,13 @@ import random
 class App:
     def __init__(self):
         self.width ,self.height = 200, 150
-        self.caption = 'When starts are right'
+        self.caption = 'The Stars Are Right'
         pyxel.init(self.width,self.height,caption=self.caption)
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
-        self.flip_card_status = True
+        self.flip_card_status = False
         self.trigger_shuffle = False
+        self.highlight_set = set()
         self.location_maping()
         self.board_cards = self.board_setting()
         pyxel.run(self.update, self.draw)
@@ -61,6 +62,12 @@ class App:
             for y in range(5):
                 self.board_map[(x,y)] = ({'x':20+x*25,'y':20+y*25})
         
+        self.board_map['flip'] = {'x':160,'y':25}
+        self.board_map['switch'] = {'x':160,'y':55}
+
+    def highlight(self,board_map_loc,size=20,col=9):
+        location_screen = self.board_map.get(board_map_loc)
+        pyxel.rect(location_screen['x']-2,location_screen['y']-2,size,size,col)
 
     def board_draw(self,board_map_loc, img_loc,object_size={'wight':16,'height':16}):
         """
@@ -88,17 +95,22 @@ class App:
             self.trigger_shuffle = True
             self.trigger_wait = pyxel.frame_count +50        
             
-            
         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
-            # test shuffle cards
-            # self.board_cards = self.board_setting()
-            if self.flip_card_status:
-                x = pyxel.mouse_x
-                y = pyxel.mouse_y
-                click_board = self.locate_mouse(x,y)
-                if click_board:
-                    card_num = click_board[0] + click_board[1]*5
-                    self.board_cards[card_num] = self.card_flip(self.board_cards[card_num])
+            x = pyxel.mouse_x
+            y = pyxel.mouse_y
+            print(self.highlight_set)
+            click_board = self.locate_mouse(x,y)
+            if self.flip_card_status and type(click_board) ==tuple:
+                card_num = click_board[0] + click_board[1]*5
+                self.board_cards[card_num] = self.card_flip(self.board_cards[card_num])
+            if click_board:
+                if click_board in self.highlight_set:
+                    self.highlight_set.remove(click_board)
+                else:
+                    self.highlight_set.add(click_board)
+                    
+            if self.locate_mouse(x,y) =='flip':
+                self.flip_card_status = not self.flip_card_status
 
         if self.trigger_shuffle:
             if pyxel.frame_count > self.trigger_wait:
@@ -114,14 +126,29 @@ class App:
         流星(ss) 流星體(mt) 3 
         太陽(su) 日蝕(se) 2 
         滿月(mo) 月蝕(me) 2
+        self.board_map['flip'] = {'x':160,'y':25}
+        self.board_map['switch'] = {'x':160,'y':55}
         """
+        # base background
         pyxel.cls(1)
-        pyxel.text(20,5, f'When Star Are Right', 9)
-        # img_list = list(self.img_map)
-        print(pyxel.frame_count)
+        pyxel.text(20,5, self.caption, 9)
+        pyxel.text(125,5, f'{pyxel.frame_count}', 9)
+        pyxel.text(150,7, f'{pyxel.mouse_x,pyxel.mouse_y}', 9)
+        
+        
+
+        # proc light on effect
+        if self.highlight_set:
+            for loc in self.highlight_set:
+                self.highlight(loc)
+        
+        # draw main board
         for i in range(25):
             img_name = self.board_cards[i]
             self.board_draw(i,img_name)
+
+        self.board_draw('flip','flip')
+        self.board_draw('switch','switch')
 
 if __name__ == '__main__':
     App()
