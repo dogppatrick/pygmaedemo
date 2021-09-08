@@ -7,9 +7,17 @@ class App:
         pyxel.init(self.width,self.height,caption=self.caption)
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
-        self.flip_card_status = False
+        self.action = None
+        
+        # self.flip_card_status = False
+        # self.switch_card_status = False
+        self.tmp = None
         self.trigger_shuffle = False
-        self.highlight_set = set()
+        self.highlight_dict = dict() # {<color>:[place...]}
+        self.highlight_dict = {15:set(), 11:set()}
+        self.color_match = {'flip':15, 'switch':11}
+        self.fade_frame_count = 20
+        self.fade_out = dict()
         self.location_maping()
         self.board_cards = self.board_setting()
         pyxel.run(self.update, self.draw)
@@ -22,6 +30,17 @@ class App:
                 return f_card
         print('wrong card input')
     
+    def card_switch(self,card_num,click_board):
+        if not self.tmp:
+            self.tmp = card_num, click_board
+            self.highlight_dict[self.color_match['switch']] |= {click_board}
+        else:
+            pre_card_num, pre_click_board = self.tmp
+            self.board_cards[card_num], self.board_cards[pre_card_num] = self.board_cards[pre_card_num], self.board_cards[card_num]
+            self.highlight_dict[self.color_match['switch']] |= {click_board}
+            self.fade_out[pyxel.frame_count] = {click_board,pre_click_board}
+            self.tmp = None
+
     def locate_mouse(self,x,y):
         # find if on boards
         print(x,y)
@@ -65,9 +84,12 @@ class App:
         self.board_map['flip'] = {'x':160,'y':25}
         self.board_map['switch'] = {'x':160,'y':55}
 
-    def highlight(self,board_map_loc,size=20,col=9):
-        location_screen = self.board_map.get(board_map_loc)
-        pyxel.rect(location_screen['x']-2,location_screen['y']-2,size,size,col)
+    def highlight_draw(self,board_map_loc,size=20,col=9):
+        try:
+            location_screen = self.board_map.get(board_map_loc)
+            pyxel.rect(location_screen['x']-2,location_screen['y']-2,size,size,col)
+        except Exception as e:
+            print(f'{e}, {board_map_loc}')
 
     def board_draw(self,board_map_loc, img_loc,object_size={'wight':16,'height':16}):
         """
@@ -91,31 +113,42 @@ class App:
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
         if pyxel.btnp(pyxel.MOUSE_RIGHT_BUTTON):
-            # test shuffle cards
             self.trigger_shuffle = True
             self.trigger_wait = pyxel.frame_count +50        
             
         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
             x = pyxel.mouse_x
             y = pyxel.mouse_y
-            print(self.highlight_set)
             click_board = self.locate_mouse(x,y)
-            if self.flip_card_status and type(click_board) ==tuple:
+            if self.action == 'flip' and type(click_board) ==tuple:
                 card_num = click_board[0] + click_board[1]*5
                 self.board_cards[card_num] = self.card_flip(self.board_cards[card_num])
-            if click_board:
-                if click_board in self.highlight_set:
-                    self.highlight_set.remove(click_board)
-                else:
-                    self.highlight_set.add(click_board)
-                    
-            if self.locate_mouse(x,y) =='flip':
-                self.flip_card_status = not self.flip_card_status
 
-        if self.trigger_shuffle:
-            if pyxel.frame_count > self.trigger_wait:
-                self.board_cards = self.board_setting()
-                self.trigger_shuffle = False
+            if self.action == 'switch' and type(click_board) ==tuple:
+                card_num = click_board[0] + click_board[1]*5
+                self.card_switch(card_num,click_board)
+
+            
+
+            for act_name in ['flip', 'switch']:
+                if click_board == act_name:
+                    self.action = act_name if self.action != act_name else None
+                print(f'111{self.highlight_dict}')
+                self.highlight_dict[self.color_match[act_name]] -= {act_name}
+
+            if self.action:
+                self.highlight_dict[self.color_match[self.action]] |= {self.action}
+
+        for start_frame in list(self.fade_out.keys()):
+            if pyxel.frame_count - start_frame > self.fade_frame_count:
+                    self.highlight_dict[self.color_match['switch']] -= self.fade_out[start_frame]
+                    self.fade_out.pop(start_frame)
+
+        # trigger shuffle after sec
+        # if self.trigger_shuffle:
+        #     if pyxel.frame_count > self.trigger_wait:
+        #         self.board_cards = self.board_setting()
+        #         self.trigger_shuffle = False
 
     def draw(self):
         """
@@ -138,9 +171,10 @@ class App:
         
 
         # proc light on effect
-        if self.highlight_set:
-            for loc in self.highlight_set:
-                self.highlight(loc)
+        if self.highlight_dict:
+            for color in self.highlight_dict:
+                for loc in self.highlight_dict.get(color):
+                    self.highlight_draw(loc,col=color)
         
         # draw main board
         for i in range(25):
