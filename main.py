@@ -16,7 +16,6 @@ class App:
         self.fade_frame_count = 12
         self.fade_out = dict()
         self.location_maping()
-        print(self.board_map)
         self.board_cards = self.board_setting()
         pyxel.run(self.update, self.draw)
 
@@ -41,25 +40,25 @@ class App:
 
     def card_row_move(self,x,y):
         to_move = row_col = None
-        if x < 25 and 125 > y > 30:
+        if 5 < x < 25 and 125 > y > 30:
             to_move = 'right'
             row_col = (y - 30) // 20 
             tmp = self.board_cards[row_col*5:row_col*5+5]
             tmp =  [tmp.pop()] + tmp
             self.board_cards[row_col*5:row_col*5+5] = tmp
-        elif x > 120 and 125 > y > 30:
+        elif 140 > x > 120 and 125 > y > 30:
             to_move = 'left'
             row_col = (y - 30) // 20
             tmp = self.board_cards[row_col*5:row_col*5+5]
             tmp =  tmp + [tmp.pop(0)]
             self.board_cards[row_col*5:row_col*5+5] = tmp
-        elif y < 30 and 125 > x > 25:
+        elif 5 < y < 30 and 125 > x > 25:
             to_move = 'down'
             row_col = (x - 25) //20
             tmp = self.board_cards[row_col::5]
             tmp =  [tmp.pop()] + tmp
             self.board_cards[row_col::5] = tmp
-        elif y > 125 and 125 > x > 25:
+        elif 145 > y > 125 and 125 > x > 25:
             to_move = 'up'
             row_col = (x - 25) //20
             tmp = self.board_cards[row_col::5]
@@ -68,7 +67,8 @@ class App:
 
     def locate_mouse(self,x,y):
         # find if on boards
-        print(x,y)
+        if self.debug:
+            print(x,y)
         for locate,location_screen in self.board_map.items():
             screen_x , screen_y = location_screen['x'],location_screen['y']
             if screen_x <= x <= (screen_x +16) and screen_y <= y <= screen_y +16:
@@ -164,6 +164,7 @@ class App:
             
             if self.action == 'row_move':
                 self.card_row_move(x,y)
+                # self.action = False
 
             for act_name in ['flip', 'switch','row_move']:
                 if click_board == act_name:
