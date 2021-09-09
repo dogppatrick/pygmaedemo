@@ -1,13 +1,14 @@
 import pyxel
 import random
 class App:
-    def __init__(self):
+    def __init__(self,debug = True):
         self.width ,self.height = 200, 150
         self.caption = 'The Stars Are Right'
         pyxel.init(self.width,self.height,caption=self.caption)
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
         self.action = None
+        self.debug = debug
         self.tmp = None
         self.trigger_shuffle = False
         self.color_match = {'flip':15, 'switch':11, 'row_move':8}
@@ -15,6 +16,7 @@ class App:
         self.fade_frame_count = 12
         self.fade_out = dict()
         self.location_maping()
+        print(self.board_map)
         self.board_cards = self.board_setting()
         pyxel.run(self.update, self.draw)
 
@@ -38,7 +40,31 @@ class App:
             self.tmp = None
 
     def card_row_move(self,x,y):
-        pass
+        to_move = row_col = None
+        if x < 25 and 125 > y > 30:
+            to_move = 'right'
+            row_col = (y - 30) // 20 
+            tmp = self.board_cards[row_col*5:row_col*5+5]
+            tmp =  [tmp.pop()] + tmp
+            self.board_cards[row_col*5:row_col*5+5] = tmp
+        elif x > 120 and 125 > y > 30:
+            to_move = 'left'
+            row_col = (y - 30) // 20
+            tmp = self.board_cards[row_col*5:row_col*5+5]
+            tmp =  tmp + [tmp.pop(0)]
+            self.board_cards[row_col*5:row_col*5+5] = tmp
+        elif y < 30 and 125 > x > 25:
+            to_move = 'down'
+            row_col = (x - 25) //20
+            tmp = self.board_cards[row_col::5]
+            tmp =  [tmp.pop()] + tmp
+            self.board_cards[row_col::5] = tmp
+        elif y > 125 and 125 > x > 25:
+            to_move = 'up'
+            row_col = (x - 25) //20
+            tmp = self.board_cards[row_col::5]
+            tmp =  tmp + [tmp.pop(0)]
+            self.board_cards[row_col::5] = tmp
 
     def locate_mouse(self,x,y):
         # find if on boards
@@ -162,8 +188,9 @@ class App:
         # base background
         pyxel.cls(1)
         pyxel.text(20,5, self.caption, 9)
-        pyxel.text(125,5, f'{pyxel.frame_count}', 9)
-        pyxel.text(150,7, f'{pyxel.mouse_x,pyxel.mouse_y}', 9)
+        if self.debug:
+            pyxel.text(125,5, f'{pyxel.frame_count}', 9)
+            pyxel.text(150,7, f'{pyxel.mouse_x,pyxel.mouse_y}', 9)
         
         # effect [highlight]
         if self.highlight_dict:
@@ -184,4 +211,4 @@ class App:
         self.board_draw('row_move','row_move')
 
 if __name__ == '__main__':
-    App()
+    App(debug=False)
