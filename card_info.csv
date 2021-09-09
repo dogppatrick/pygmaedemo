@@ -1,0 +1,75 @@
+Cthulhu,Great Old One,P P P,n/a,Cthulhu,4,4-L-b-Me/b-b-Su-V,P -> P P P
+Cthulhu,Great Old One,F F F,n/a,Cthulhu,4,Me-b-b-Su/4-b-V-L,F -> F F F
+Cthulhu,Great Old One,S S S,n/a,Cthulhu,4,Su-4-b-b/b-L-V-Sh,S -> S S S
+Hastur,Great Old One,P P P,n/a,Hastur,4,5-b-4/Mo-V-L,P -> P P P
+Hastur,Great Old One,F F F,n/a,Hastur,4,Mo-b-V-L/5-b-b-4,F -> F F F
+Hastur,Great Old One,S S S,n/a,Hastur,4,b-4-b-Mo/5-V-b-L,S -> S S S
+Tsatso,Great Old One,P P P,n/a,Tsatso,4,b-b-1-So/L-Wx-V-b,P -> P P P
+Tsatso,Great Old One,F F F,n/a,Tsatso,4,b-b-b-L/1-So-V-Wx,F -> F F F
+Tsatso,Great Old One,S S S,n/a,Tsatso,4,V-b-So-Wx/L-b-b-1,S -> S S S
+Chaugnar,Great Old One,P P P,n/a,Chaugnar,4,So-Wn-b-1/Me-b-b-Mo,P -> P P P
+Chaugnar,Great Old One,F F F,n/a,Chaugnar,4,So-Me-b-Mo/b-b-Wn-1,F -> F F F
+Chaugnar,Great Old One,S S S,n/a,Chaugnar,4,b-1-b-Me/Wn-So-Mo-b,S -> S S S
+Dagoon,Greater Servitor,P P,L,Cthulhu,2,Mo-Sh-1,P -> P P
+Dagoon,Greater Servitor,F F,4,Cthulhu,2,1-b-Wn-2,F -> F F
+Dagoon,Greater Servitor,S S,Me,Cthulhu,2,4-Me-b-5,S -> S S
+Hastur's Spawn,Greater Servitor,P P,Mo,Hastur,2,1-b-So/b-Wn-b,P -> P P
+Hastur's Spawn,Greater Servitor,F F,4,Hastur,2,b-1-2/Sh-b-b,F -> F F
+Hastur's Spawn,Greater Servitor,S S,V,Hastur,2,b-Wx-b/V-b-5,S -> S S
+Ossadogowa,Greater Servitor,P P,L,Tsatso,2,b-Wn-b-So/4-b-b-b,P -> P P
+Ossadogowa,Greater Servitor,F F,1,Tsatso,2,1-b-b-b/b-3-b-Wx,F -> F F
+Ossadogowa,Greater Servitor,S S,Wx,Tsatso,2,b-4-b-b/5-b-b-Sh,S -> S S
+Miri Nigri,Greater Servitor,P P,Mo,Chaugnar,2,Mo-Wx/1-b,P -> P P
+Miri Nigri,Greater Servitor,F F,1,Chaugnar,2,2-Sh/1-b,F -> F F
+Miri Nigri,Greater Servitor,S S,Me,Chaugnar,2,V-4/5-b,S -> S S
+Deep Ones,Lesser Servitor,P,L,Cthulhu,1,3-So&3-L,P -> P P
+Deep Ones,Lesser Servitor,P,4,Cthulhu,1,L-4&2-2,F -> P
+Deep Ones,Lesser Servitor,P,Sh,Cthulhu,1,Su-Me&1-2,S -> P
+Deep Ones,Lesser Servitor,F,L,Cthulhu,1,Wx-1&Wn-4,P -> F
+Deep Ones,Lesser Servitor,F,4,Cthulhu,1,V-2&V-3,F -> F F
+Deep Ones,Lesser Servitor,F,Sh,Cthulhu,1,3-Wn&V-4,S -> F
+Deep Ones,Lesser Servitor,S,L,Cthulhu,1,V-Su&3-4,P -> S
+Deep Ones,Lesser Servitor,S,4,Cthulhu,1,Sh-1&1-3,F -> S
+Deep Ones,Lesser Servitor,S,Sh,Cthulhu,1,Su-1&2-4,S -> S S
+Byakhee,Lesser Servitor,P,Mo,Hastur,1,Su-3&L-2,P -> P P
+Byakhee,Lesser Servitor,P,4,Hastur,1,L-2&1-3,F -> P
+Byakhee,Lesser Servitor,P,V,Hastur,1,So-3&V-2,S -> P
+Byakhee,Lesser Servitor,F,Mo,Hastur,1,Wn-1&Sh-4,P -> F
+Byakhee,Lesser Servitor,F,4,Hastur,1,Me-V&2-3,F -> F F
+Byakhee,Lesser Servitor,F,V,Hastur,1,V-2&3-5,S -> F
+Byakhee,Lesser Servitor,S,Mo,Hastur,1,Mo-2&4-5,P -> S
+Byakhee,Lesser Servitor,S,4,Hastur,1,1-5&3-4,F -> S
+Byakhee,Lesser Servitor,S,V,Hastur,1,Mo-4&1-2,S -> S S
+Formless,Lesser Servitor,P,Mo,Tsatso,1,Su-Mo&2-4,P -> P P
+Formless,Lesser Servitor,P,1,Tsatso,1,L-3&2-4,F -> P
+Formless,Lesser Servitor,P,Wx,Tsatso,1,Mo-V&3-3,S -> P
+Formless,Lesser Servitor,F,Mo,Tsatso,1,Me-4&Sh-1,P -> F
+Formless,Lesser Servitor,F,1,Tsatso,1,Wn-4&Wx-4,F -> F F
+Formless,Lesser Servitor,F,Wx,Tsatso,1,V-5&4-1,S -> F
+Formless,Lesser Servitor,S,Mo,Tsatso,1,Mo-1&Wx-2,P -> S
+Formless,Lesser Servitor,S,1,Tsatso,1,Sh-4&1-3,F -> S
+Formless,Lesser Servitor,S,Wx,Tsatso,1,So-3&4-4,S -> S S
+Tcho Tcho,Lesser Servitor,P,Mo,Chaugnar,1,Mo-3&L-2,P -> P P
+Tcho Tcho,Lesser Servitor,P,1,Chaugnar,1,So-2&1-3,F -> P
+Tcho Tcho,Lesser Servitor,P,Me,Chaugnar,1,L-2&2-5,S -> P
+Tcho Tcho,Lesser Servitor,F,Mo,Chaugnar,1,5-1&V-1,P -> F
+Tcho Tcho,Lesser Servitor,F,1,Chaugnar,1,V-3&Wx-2,F -> F F
+Tcho Tcho,Lesser Servitor,F,Me,Chaugnar,1,Wx-3&Me-1,S -> F
+Tcho Tcho,Lesser Servitor,S,Mo,Chaugnar,1,So-4&5-3,P -> S
+Tcho Tcho,Lesser Servitor,S,1,Chaugnar,1,Sh-1&4-2,F -> S
+Tcho Tcho,Lesser Servitor,S,Me,Chaugnar,1,Mo-4&3-4,S -> S S
+Gug,Minion,P,n/a,n/a,0,V&V&V&Su,Discard to exchange < Servitors
+Gug,Minion,F,n/a,n/a,0,Me&Me&Me&L,Discard to exchange < Servitors
+Gug,Minion,S,n/a,n/a,0,Wx&Wx&Wx&Mo,Discard to exchange < Servitors
+Tindaloo,Minion,P,n/a,n/a,0,Su&Su&Mo&Mo,Discard to exchange > Servitors
+Tindaloo,Minion,F,n/a,n/a,0,Su&Su&L&L,Discard to exchange > Servitors
+Tindaloo,Minion,S,n/a,n/a,0,So&So&L&L,Discard to exchange > Servitors
+Dhole,Minion,P,n/a,n/a,0,Su&So&L&L,Discard to take Draw/Discard card
+Dhole,Minion,F,n/a,n/a,0,So&So&Mo&L,Discard to take Draw/Discard card
+Dhole,Minion,S,n/a,n/a,0,Su&Su&Mo&L,Discard to take Draw/Discard card
+Ghast,Minion,P,n/a,n/a,0,V&Me&Wx&L,Hand limit is 6
+Ghast,Minion,F,n/a,n/a,0,V&Me&Wx&Mo,Hand limit is 6
+Ghast,Minion,S,n/a,n/a,0,5&Sh&Wn&Su,Hand limit is 6
+Ghouls,Minion,P,n/a,n/a,0,5&5&Su&So,May discard 2 cards per turn
+Ghouls,Minion,F,n/a,n/a,0,Wn&Wn&Su&So,May discard 2 cards per turn
+Ghouls,Minion,S,n/a,n/a,0,Me&Me&Mo&L,May discard 2 cards per turn

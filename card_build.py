@@ -13,6 +13,7 @@ class App:
         pyxel.init(self.width,self.height,caption=self.caption)
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
+        self.board_y_gap = 0
         self.action = None
         self.debug = debug
         self.row_long = 4
@@ -51,14 +52,23 @@ class App:
         for x in range(5):
             for y in range(5):
                 self.board_map[(x,y)] = ({'x':25+x*18,'y':30+y*18})
+    
+    def gap_reset(self):
+        self.board_map = dict()
+        for x in range(5):
+            for y in range(5):
+                self.board_map[(x,y)] = ({'x':25+x*18,'y':30+y*(18 + self.board_y_gap)})
 
     def card_to_board(self,cards):
         if len(cards) <2:
             card = cards[0]
+            self.board_y_gap = 0
         else:
+            self.board_y_gap = 8
             card = []
             for c in cards:
                 card += c
+        self.gap_reset()
         res = []
         self.row_long = len(card[0])
         for l in card:
@@ -102,7 +112,7 @@ class App:
         # base background
         pyxel.cls(1)
         pyxel.text(20,5, self.caption, 9)
-        card_no = pyxel.frame_count//10 % 75
+        card_no = pyxel.frame_count//20 % 75
         cards = card_board_f[card_no]
         y = 120
         for card in cards:
