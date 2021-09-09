@@ -52,7 +52,13 @@ class App:
             for y in range(5):
                 self.board_map[(x,y)] = ({'x':25+x*18,'y':30+y*18})
 
-    def card_to_board(self,card):
+    def card_to_board(self,cards):
+        if len(cards) <2:
+            card = cards[0]
+        else:
+            card = []
+            for c in cards:
+                card += c
         res = []
         self.row_long = len(card[0])
         for l in card:
@@ -96,13 +102,14 @@ class App:
         # base background
         pyxel.cls(1)
         pyxel.text(20,5, self.caption, 9)
-        card_no = pyxel.frame_count//2 % 75
+        card_no = pyxel.frame_count//10 % 75
         cards = card_board_f[card_no]
         y = 120
         for card in cards:
             pyxel.text(5,y,f'{card_no}, {card}',9)
-            self.card_to_board(card)
             y +=10
+
+        self.card_to_board(cards)
 
         # draw main board
         for i in range(len(self.board_cards)):
