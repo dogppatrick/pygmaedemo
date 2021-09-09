@@ -10,6 +10,12 @@ pip install -r requirements
 python main.py
 ```
 
+# pack it 
+```
+pyxelpackager main.py
+```
+
+
 # Control
 ```
 q to quite

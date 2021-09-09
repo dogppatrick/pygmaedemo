@@ -8,15 +8,11 @@ class App:
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
         self.action = None
-        
-        # self.flip_card_status = False
-        # self.switch_card_status = False
         self.tmp = None
         self.trigger_shuffle = False
-        self.highlight_dict = dict() # {<color>:[place...]}
-        self.highlight_dict = {15:set(), 11:set()}
-        self.color_match = {'flip':15, 'switch':11}
-        self.fade_frame_count = 20
+        self.color_match = {'flip':15, 'switch':11, 'row_move':8}
+        self.highlight_dict = {col:set() for col in self.color_match.values()}
+        self.fade_frame_count = 12
         self.fade_out = dict()
         self.location_maping()
         self.board_cards = self.board_setting()
@@ -40,6 +36,9 @@ class App:
             self.highlight_dict[self.color_match['switch']] |= {click_board}
             self.fade_out[pyxel.frame_count] = {click_board,pre_click_board}
             self.tmp = None
+
+    def card_row_move(self,x,y):
+        pass
 
     def locate_mouse(self,x,y):
         # find if on boards
@@ -71,18 +70,19 @@ class App:
         img_name = ['su','se','4s','1s','ss','mt'
                    ,'mo','me','5s','vo','3s','2s','lm','gm'
                    ,'right','left','up','down'
-                   ,'flip','switch']
-        img_loc = [{'x':x,'y':y} for y in range(0,16*10,16) for x in range(0,16*2,16)]        
+                   ,'flip','switch','row_move','None']
+        img_loc = [{'x':x,'y':y} for y in range(0,16*11,16) for x in range(0,16*2,16)]        
         for name, loc in zip (img_name,img_loc):
             self.img_map[name] = loc
             
         self.board_map = dict()
         for x in range(5):
             for y in range(5):
-                self.board_map[(x,y)] = ({'x':20+x*25,'y':20+y*25})
+                self.board_map[(x,y)] = ({'x':25+x*20,'y':30+y*20})
         
-        self.board_map['flip'] = {'x':160,'y':25}
-        self.board_map['switch'] = {'x':160,'y':55}
+        self.board_map['flip']      = {'x':150,'y':30}
+        self.board_map['switch']    = {'x':150,'y':50}
+        self.board_map['row_move']  = {'x':150,'y':70}
 
     def highlight_draw(self,board_map_loc,size=20,col=9):
         try:
@@ -91,7 +91,7 @@ class App:
         except Exception as e:
             print(f'{e}, {board_map_loc}')
 
-    def board_draw(self,board_map_loc, img_loc,object_size={'wight':16,'height':16}):
+    def board_draw(self,board_map_loc, img_loc,object_size={'wight':16,'height':16},shift_x=0,shift_y=0):
         """
         board_map_loc : tuple or int (int will transfer to  tuple)
         img_loc name of img : str
@@ -105,9 +105,17 @@ class App:
             print(f'{location_screen} or {location_source} not found')
             return
         try:
-            pyxel.blt(location_screen['x'],location_screen['y'],0,location_source['x'],location_source['y'],object_size['wight'],object_size['height'])
+            pyxel.blt(location_screen['x'] + shift_x, location_screen['y'] + shift_y,0
+                     ,location_source['x'], location_source['y']
+                     ,object_size['wight'], object_size['height'])
         except Exception as e:
             print(f'error :{e} , {board_map_loc}, {img_loc}')
+
+    def row_move_draw(self):
+        down = [self.board_draw((i,0),'down',shift_y=-18) for i in range(5)]
+        up = [self.board_draw((i,4),'up'  ,shift_y=18) for i in range(5)]
+        left = [self.board_draw((0,i),'right',shift_x=-18) for i in range(5)]
+        right = [self.board_draw((4,i),'left',shift_x=18) for i in range(5)]
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
@@ -127,13 +135,13 @@ class App:
             if self.action == 'switch' and type(click_board) ==tuple:
                 card_num = click_board[0] + click_board[1]*5
                 self.card_switch(card_num,click_board)
-
             
+            if self.action == 'row_move':
+                self.card_row_move(x,y)
 
-            for act_name in ['flip', 'switch']:
+            for act_name in ['flip', 'switch','row_move']:
                 if click_board == act_name:
                     self.action = act_name if self.action != act_name else None
-                print(f'111{self.highlight_dict}')
                 self.highlight_dict[self.color_match[act_name]] -= {act_name}
 
             if self.action:
@@ -151,26 +159,13 @@ class App:
         #         self.trigger_shuffle = False
 
     def draw(self):
-        """
-        2顆星(2 Stars) 3顆星(3 Stars) 7 
-        1顆星(1 Star) 4顆星(4 Stars) 5 
-        空洞(vo) 5顆星(5 Stars) 3 
-        殘月(lm) 盈月(gm) 3 
-        流星(ss) 流星體(mt) 3 
-        太陽(su) 日蝕(se) 2 
-        滿月(mo) 月蝕(me) 2
-        self.board_map['flip'] = {'x':160,'y':25}
-        self.board_map['switch'] = {'x':160,'y':55}
-        """
         # base background
         pyxel.cls(1)
         pyxel.text(20,5, self.caption, 9)
         pyxel.text(125,5, f'{pyxel.frame_count}', 9)
         pyxel.text(150,7, f'{pyxel.mouse_x,pyxel.mouse_y}', 9)
         
-        
-
-        # proc light on effect
+        # effect [highlight]
         if self.highlight_dict:
             for color in self.highlight_dict:
                 for loc in self.highlight_dict.get(color):
@@ -180,9 +175,13 @@ class App:
         for i in range(25):
             img_name = self.board_cards[i]
             self.board_draw(i,img_name)
+        
+        if self.action =='row_move':
+            self.row_move_draw()
 
         self.board_draw('flip','flip')
         self.board_draw('switch','switch')
+        self.board_draw('row_move','row_move')
 
 if __name__ == '__main__':
     App()
