@@ -13,7 +13,9 @@ class App:
         pyxel.init(self.width,self.height,caption=self.caption)
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
+        self.board_x_gap = 0
         self.board_y_gap = 0
+        self.board_right_shift = 0
         self.action = None
         self.debug = debug
         self.row_long = 4
@@ -47,7 +49,11 @@ class App:
         img_loc = [{'x':x,'y':y} for y in range(0,16*11,16) for x in range(0,16*2,16)]        
         for name, loc in zip (img_name,img_loc):
             self.img_map[name] = loc
-            
+        
+        self.c_name = ['Cthulhu','Tsatso','Hastur','Chaugnar','Dagoon','Ossadogowa',"Hastur's Spawn","Miri Nigri"]
+        img_loc = [{'x':x,'y':y} for x in range(32,32+32*2,32) for y in range(0,32*4,32)]        
+        for name, loc in zip (self.c_name,img_loc):
+            self.img_map[name] = loc
         self.board_map = dict()
         for x in range(5):
             for y in range(5):
@@ -57,14 +63,18 @@ class App:
         self.board_map = dict()
         for x in range(5):
             for y in range(5):
-                self.board_map[(x,y)] = ({'x':25+x*18,'y':30+y*(18 + self.board_y_gap)})
+                self.board_map[(x,y)] = ({'x':25+x*(18+self.board_x_gap)+self.board_right_shift,'y':60+y*(18+self.board_y_gap)})
 
     def card_to_board(self,cards):
         if len(cards) <2:
             card = cards[0]
-            self.board_y_gap = 0
+            self.board_x_gap = 0
+            self.t_board = False
+            self.board_right_shift = 0
         else:
-            self.board_y_gap = 8
+            self.board_x_gap = 20 if len(cards)==2 else 3
+            self.board_right_shift = 10 if len(cards)==2 else 0
+            self.t_board = True
             card = []
             for c in cards:
                 card += c
@@ -84,6 +94,8 @@ class App:
         """
         if type(board_map_loc)==int:
             board_map_loc = (board_map_loc % self.row_long ,board_map_loc //self.row_long ,)
+            if self.t_board:
+                board_map_loc = board_map_loc[::-1]
         location_screen = self.board_map.get(board_map_loc)
         location_source = self.img_map.get(img_loc)
         if not location_screen and not location_source:
@@ -96,17 +108,22 @@ class App:
         except Exception as e:
             print(f'error :{e} , {board_map_loc}, {img_loc}')
 
-    def card_img_draw(self,location_screen, location_source,object_size={'wight':32,'height':32},shift_x=0,shift_y=0):
+    def card_draw(self,card_no,object_size={'wight':32,'height':32}):
         """
-        card draw on img 0
+        object size : default 32*32
         """
+        cname = self.c_name[card_no %8]
+        location_screen = {'x':45, 'y':25}
+        location_source = self.img_map.get(cname)
+        if not location_screen and not location_source:
+            print(f'{location_screen} or {location_source} not found')
+            return
         try:
-            pyxel.blt(location_screen['x'] + shift_x, location_screen['y'] + shift_y, 0
+            pyxel.blt(location_screen['x'] ,location_screen['y'] , 0
                      ,location_source['x'], location_source['y']
                      ,object_size['wight'], object_size['height'])
         except Exception as e:
-            print(f'error :{e} , {location_screen}, {location_source}')
-
+            print(f'error :{e} , {card_no}')
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
@@ -122,21 +139,26 @@ class App:
 
     def draw(self):
         # base background
-        pyxel.cls(1)
+        pyxel.cls(13)
         pyxel.text(20,5, self.caption, 9)
-        card_no = pyxel.frame_count//20 % 75
+        card_no = pyxel.frame_count//3 % 75
         cards = card_board_f[card_no]
+        card_name = self.c_name[card_no%8]
+        pyxel.text(48,15, f'{card_name}', 9)
+        if self.debug:
+            pyxel.text(150,7, f'{pyxel.mouse_x,pyxel.mouse_y}', 9)
         y = 120
         for card in cards:
             pyxel.text(5,y,f'{card_no}, {card}',9)
             y +=10
 
         self.card_to_board(cards)
-
         # draw main board
         for i in range(len(self.board_cards)):
             img_name = self.board_cards[i]
             self.board_draw(i,img_name)
+        self.card_draw(card_no)
+        
 
 if __name__ == '__main__':
     df = pd.read_csv("./card_info.csv",names=['card_name','card_level','play_effect','bouns','card_type','points','summon_board','power'])
@@ -156,4 +178,4 @@ if __name__ == '__main__':
             f_boards.append(board)
         card_board_f[counter] = f_boards.copy()
         counter +=1
-    App(debug=False)
+    App(debug=True)
