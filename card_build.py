@@ -90,11 +90,23 @@ class App:
             print(f'{location_screen} or {location_source} not found')
             return
         try:
-            pyxel.blt(location_screen['x'] + shift_x, location_screen['y'] + shift_y,0
+            pyxel.blt(location_screen['x'] + shift_x, location_screen['y'] + shift_y, 0
                      ,location_source['x'], location_source['y']
                      ,object_size['wight'], object_size['height'])
         except Exception as e:
             print(f'error :{e} , {board_map_loc}, {img_loc}')
+
+    def card_img_draw(self,location_screen, location_source,object_size={'wight':32,'height':32},shift_x=0,shift_y=0):
+        """
+        card draw on img 0
+        """
+        try:
+            pyxel.blt(location_screen['x'] + shift_x, location_screen['y'] + shift_y, 0
+                     ,location_source['x'], location_source['y']
+                     ,object_size['wight'], object_size['height'])
+        except Exception as e:
+            print(f'error :{e} , {location_screen}, {location_source}')
+
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
