@@ -51,10 +51,20 @@ class App:
         for name, loc in zip (img_name,img_loc):
             self.img_map[name] = loc
         
-        self.c_name = ['Cthulhu','Tsatso','Hastur','Chaugnar','Dagoon','Ossadogowa',"Hastur's Spawn","Miri Nigri"]
-        img_loc = [{'x':x,'y':y} for x in range(32,32+32*2,32) for y in range(0,32*4,32)]        
+        self.c_name = ['Cthulhu','Tsatso','Hastur','Chaugnar'
+                      ,'Dagoon','Ossadogowa',"Hastur's Spawn","Miri Nigri"
+                      ,'Deep Ones', 'Formless', 'Byakhee', 'Tcho Tcho']
+        img_loc = [{'x':x,'y':y} for x in range(32,32+32*3,32) for y in range(0,32*4,32)]        
         for name, loc in zip (self.c_name,img_loc):
             self.img_map[name] = loc
+
+        minion = ['Gug', 'Tindaloo', 'Dhole', 'Ghast', 'Ghouls']
+        minion_img_loc = [{'x':128,'y':y} for y in range(0,32*5,32)]        
+        for name, loc in zip (minion,minion_img_loc):
+            self.img_map[name] = loc
+        self.c_name += minion
+
+
         self.board_map = dict()
         for x in range(5):
             for y in range(5):
@@ -109,22 +119,21 @@ class App:
         except Exception as e:
             print(f'error :{e} , {board_map_loc}, {img_loc}')
 
-    def card_draw(self,card_no,object_size={'wight':32,'height':32}):
+    def card_draw(self,card_name,object_size={'wight':32,'height':32}):
         """
         object size : default 32*32
         """
-        cname = self.c_name[card_no %8]
         location_screen = {'x':45, 'y':25}
-        location_source = self.img_map.get(cname)
+        location_source = self.img_map.get(card_name)
         if not location_screen and not location_source:
-            print(f'{location_screen} or {location_source} not found')
+            print(f'{location_screen} or {location_source} {card_name} not found')
             return
         try:
             pyxel.blt(location_screen['x'] ,location_screen['y'] , 0
                      ,location_source['x'], location_source['y']
                      ,object_size['wight'], object_size['height'])
         except Exception as e:
-            print(f'error :{e} , {card_no}')
+            print(f'error :{e} , {card_name}')
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
@@ -144,7 +153,7 @@ class App:
         pyxel.text(20,5, self.caption, 9)
         card_no = pyxel.frame_count//3 % 75
         cards = self.card_board_f[card_no]
-        card_name = self.c_name[card_no%8]
+        card_name = cards.get('card_name')
         pyxel.text(48,15, f'{card_name}', 9)
         if self.debug:
             pyxel.text(150,7, f'{pyxel.mouse_x,pyxel.mouse_y}', 9)
@@ -153,12 +162,12 @@ class App:
             pyxel.text(5,y,f'{card_no}, {card}',9)
             y +=10
 
-        self.card_to_board(cards)
+        self.card_to_board(cards.get('card_board'))
         # draw main board
         for i in range(len(self.board_cards)):
             img_name = self.board_cards[i]
             self.board_draw(i,img_name)
-        self.card_draw(card_no)
+        self.card_draw(card_name)
         
 
 if __name__ == '__main__':
@@ -171,12 +180,13 @@ if __name__ == '__main__':
     counter = 0
     card_board_f = dict()
     for card in arr:
+        card_name = card[0]
         raw_board = card[-2]
         boards = raw_board.split('&')
         f_boards = []
         for board in boards:
             board = [[board_match[icon] for icon in l.split('-')] for l in board.split('/')]
             f_boards.append(board)
-        card_board_f[counter] = f_boards.copy()
+        card_board_f[counter] = {'card_name':card_name,'card_board':f_boards.copy()}
         counter +=1
     App(card_board_f,debug=True)

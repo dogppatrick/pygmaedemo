@@ -147,3 +147,4 @@ log.*
 
 dist/
 pyxel_examples/
+examples/

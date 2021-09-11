@@ -31,15 +31,6 @@ Deep Ones,Lesser Servitor,F,Sh,Cthulhu,1,3-Wn&V-4,S -> F
 Deep Ones,Lesser Servitor,S,L,Cthulhu,1,V-Su&3-4,P -> S
 Deep Ones,Lesser Servitor,S,4,Cthulhu,1,Sh-1&1-3,F -> S
 Deep Ones,Lesser Servitor,S,Sh,Cthulhu,1,Su-1&2-4,S -> S S
-Byakhee,Lesser Servitor,P,Mo,Hastur,1,Su-3&L-2,P -> P P
-Byakhee,Lesser Servitor,P,4,Hastur,1,L-2&1-3,F -> P
-Byakhee,Lesser Servitor,P,V,Hastur,1,So-3&V-2,S -> P
-Byakhee,Lesser Servitor,F,Mo,Hastur,1,Wn-1&Sh-4,P -> F
-Byakhee,Lesser Servitor,F,4,Hastur,1,Me-V&2-3,F -> F F
-Byakhee,Lesser Servitor,F,V,Hastur,1,V-2&3-5,S -> F
-Byakhee,Lesser Servitor,S,Mo,Hastur,1,Mo-2&4-5,P -> S
-Byakhee,Lesser Servitor,S,4,Hastur,1,1-5&3-4,F -> S
-Byakhee,Lesser Servitor,S,V,Hastur,1,Mo-4&1-2,S -> S S
 Formless,Lesser Servitor,P,Mo,Tsatso,1,Su-Mo&2-4,P -> P P
 Formless,Lesser Servitor,P,1,Tsatso,1,L-3&2-4,F -> P
 Formless,Lesser Servitor,P,Wx,Tsatso,1,Mo-V&3-3,S -> P
@@ -49,6 +40,15 @@ Formless,Lesser Servitor,F,Wx,Tsatso,1,V-5&4-1,S -> F
 Formless,Lesser Servitor,S,Mo,Tsatso,1,Mo-1&Wx-2,P -> S
 Formless,Lesser Servitor,S,1,Tsatso,1,Sh-4&1-3,F -> S
 Formless,Lesser Servitor,S,Wx,Tsatso,1,So-3&4-4,S -> S S
+Byakhee,Lesser Servitor,P,Mo,Hastur,1,Su-3&L-2,P -> P P
+Byakhee,Lesser Servitor,P,4,Hastur,1,L-2&1-3,F -> P
+Byakhee,Lesser Servitor,P,V,Hastur,1,So-3&V-2,S -> P
+Byakhee,Lesser Servitor,F,Mo,Hastur,1,Wn-1&Sh-4,P -> F
+Byakhee,Lesser Servitor,F,4,Hastur,1,Me-V&2-3,F -> F F
+Byakhee,Lesser Servitor,F,V,Hastur,1,V-2&3-5,S -> F
+Byakhee,Lesser Servitor,S,Mo,Hastur,1,Mo-2&4-5,P -> S
+Byakhee,Lesser Servitor,S,4,Hastur,1,1-5&3-4,F -> S
+Byakhee,Lesser Servitor,S,V,Hastur,1,Mo-4&1-2,S -> S S
 Tcho Tcho,Lesser Servitor,P,Mo,Chaugnar,1,Mo-3&L-2,P -> P P
 Tcho Tcho,Lesser Servitor,P,1,Chaugnar,1,So-2&1-3,F -> P
 Tcho Tcho,Lesser Servitor,P,Me,Chaugnar,1,L-2&2-5,S -> P
