@@ -1,24 +1,24 @@
 Cthulhu,Great Old One,P P P,n/a,Cthulhu,4,4-L-b-Me/b-b-Su-V,P -> P P P
 Cthulhu,Great Old One,F F F,n/a,Cthulhu,4,Me-b-b-Su/4-b-V-L,F -> F F F
 Cthulhu,Great Old One,S S S,n/a,Cthulhu,4,Su-4-b-b/b-L-V-Sh,S -> S S S
-Hastur,Great Old One,P P P,n/a,Hastur,4,5-b-4/Mo-V-L,P -> P P P
-Hastur,Great Old One,F F F,n/a,Hastur,4,Mo-b-V-L/5-b-b-4,F -> F F F
-Hastur,Great Old One,S S S,n/a,Hastur,4,b-4-b-Mo/5-V-b-L,S -> S S S
 Tsatso,Great Old One,P P P,n/a,Tsatso,4,b-b-1-So/L-Wx-V-b,P -> P P P
 Tsatso,Great Old One,F F F,n/a,Tsatso,4,b-b-b-L/1-So-V-Wx,F -> F F F
 Tsatso,Great Old One,S S S,n/a,Tsatso,4,V-b-So-Wx/L-b-b-1,S -> S S S
+Hastur,Great Old One,P P P,n/a,Hastur,4,5-b-4/Mo-V-L,P -> P P P
+Hastur,Great Old One,F F F,n/a,Hastur,4,Mo-b-V-L/5-b-b-4,F -> F F F
+Hastur,Great Old One,S S S,n/a,Hastur,4,b-4-b-Mo/5-V-b-L,S -> S S S
 Chaugnar,Great Old One,P P P,n/a,Chaugnar,4,So-Wn-b-1/Me-b-b-Mo,P -> P P P
 Chaugnar,Great Old One,F F F,n/a,Chaugnar,4,So-Me-b-Mo/b-b-Wn-1,F -> F F F
 Chaugnar,Great Old One,S S S,n/a,Chaugnar,4,b-1-b-Me/Wn-So-Mo-b,S -> S S S
 Dagoon,Greater Servitor,P P,L,Cthulhu,2,Mo-Sh-1,P -> P P
 Dagoon,Greater Servitor,F F,4,Cthulhu,2,1-b-Wn-2,F -> F F
 Dagoon,Greater Servitor,S S,Me,Cthulhu,2,4-Me-b-5,S -> S S
-Hastur's Spawn,Greater Servitor,P P,Mo,Hastur,2,1-b-So/b-Wn-b,P -> P P
-Hastur's Spawn,Greater Servitor,F F,4,Hastur,2,b-1-2/Sh-b-b,F -> F F
-Hastur's Spawn,Greater Servitor,S S,V,Hastur,2,b-Wx-b/V-b-5,S -> S S
 Ossadogowa,Greater Servitor,P P,L,Tsatso,2,b-Wn-b-So/4-b-b-b,P -> P P
 Ossadogowa,Greater Servitor,F F,1,Tsatso,2,1-b-b-b/b-3-b-Wx,F -> F F
 Ossadogowa,Greater Servitor,S S,Wx,Tsatso,2,b-4-b-b/5-b-b-Sh,S -> S S
+Hastur's Spawn,Greater Servitor,P P,Mo,Hastur,2,1-b-So/b-Wn-b,P -> P P
+Hastur's Spawn,Greater Servitor,F F,4,Hastur,2,b-1-2/Sh-b-b,F -> F F
+Hastur's Spawn,Greater Servitor,S S,V,Hastur,2,b-Wx-b/V-b-5,S -> S S
 Miri Nigri,Greater Servitor,P P,Mo,Chaugnar,2,Mo-Wx/1-b,P -> P P
 Miri Nigri,Greater Servitor,F F,1,Chaugnar,2,2-Sh/1-b,F -> F F
 Miri Nigri,Greater Servitor,S S,Me,Chaugnar,2,V-4/5-b,S -> S S

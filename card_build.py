@@ -7,12 +7,13 @@ import random
 
 
 class App:
-    def __init__(self,debug = True):
+    def __init__(self,card_board_f,debug = True):
         self.width ,self.height = 200, 150
         self.caption = 'The Stars Are Right'
         pyxel.init(self.width,self.height,caption=self.caption)
         pyxel.load("assets/stars_and_btns.pyxres",True,False,False,False)
         pyxel.mouse(True)
+        self.card_board_f = card_board_f
         self.board_x_gap = 0
         self.board_y_gap = 0
         self.board_right_shift = 0
@@ -142,7 +143,7 @@ class App:
         pyxel.cls(13)
         pyxel.text(20,5, self.caption, 9)
         card_no = pyxel.frame_count//3 % 75
-        cards = card_board_f[card_no]
+        cards = self.card_board_f[card_no]
         card_name = self.c_name[card_no%8]
         pyxel.text(48,15, f'{card_name}', 9)
         if self.debug:
@@ -178,4 +179,4 @@ if __name__ == '__main__':
             f_boards.append(board)
         card_board_f[counter] = f_boards.copy()
         counter +=1
-    App(debug=True)
+    App(card_board_f,debug=True)
